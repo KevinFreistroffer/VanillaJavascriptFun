@@ -1,9 +1,9 @@
 "use strict";
 
-var btnOne   = document.getElementById('button-one');
-var btnTwo   = document.getElementById('button-two');
-var btnThree = document.getElementById('button-three');
+var menuLinks = document.querySelectorAll('#header li a');
+var mobileMainMenu = document.getElementById('mobile-main-menu');
 var topBoxes = document.querySelectorAll('#top-three div.box');
+var topBoxesOverlay = document.querySelectorAll('#top-three div.box-overlay');
 var topButtons = document.querySelectorAll('#top-three div.box button');
 
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     setTimeout( function() {
     	topBoxes[2].style.opacity = 1;
     }, 900 );
-
+    console.log(menuLinks)
 });
 
 
@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
  **************************************/
 function toggleTopButtons( btnNumber ) {
 
-	if ( window.getComputedStyle( topButtons[ btnNumber -1 ], null ).getPropertyValue( "opacity" ) == 0 ) {
-		topButtons[ btnNumber -1].style.opacity = 1;
+	if ( window.getComputedStyle( topBoxesOverlay[ btnNumber -1 ], null ).getPropertyValue( "opacity" ) == 0.5 ) {
+		topBoxesOverlay[ btnNumber -1].style.opacity = 1;
 	}
 	else {
-		topButtons[ btnNumber -1].style.opacity = 0;
+		topBoxesOverlay[ btnNumber -1].style.opacity = 0.5;
 	}
 
 }
@@ -68,7 +68,7 @@ function toggleAllTopButtons( toggleValue ) {
 function hideAllButtons() {
 
 	for( var i = 0; i < 3; i ++ ) {
-		topButtons[i].style.opacity = 0;
+		topBoxesOverlay[i].style.opacity = 0.5;
 	}
 
 }
@@ -79,7 +79,37 @@ function hideAllButtons() {
 function showAllButtons() {
 
 	for( var i = 0; i < 3; i ++ ) {
-		topButtons[i].style.opacity = 1;
+		topBoxesOverlay[i].style.opacity = 1;
 	}
 
 }
+
+
+/**************************
+ *  Toggle Mobile Main Menu
+ *************************/
+function toggleMainMenu() {
+
+	console.log( 'toggleMainMenu() called.' );
+
+	if ( mobileMainMenu.classList.contains('open-mobile-main-menu') ) {
+		mobileMainMenu.classList.remove('open-mobile-main-menu');
+	}
+	else {
+		mobileMainMenu.classList.add('open-mobile-main-menu');
+	}
+
+}
+
+
+/***************************************
+ *  Auto closes mobile main menu if open 
+ *  and window is resized past 700px
+ **************************************/
+window.onresize = function() {
+
+		if ( window.innerWidth >= 700 && mobileMainMenu.classList.contains('open-mobile-main-menu') ) {
+			mobileMainMenu.classList.remove('open-mobile-main-menu');
+		}
+
+};
